@@ -1,0 +1,40 @@
+##################################################################################################
+# Productpage services
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: productpage
+  labels:
+    app: productpage
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: productpage
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: productpage-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: productpage
+        version: v1
+    spec:
+      containers:
+      - name: productpage
+        image: examples-bookinfo-productpage-v1
+        #412545491238.dkr.ecr.us-east-2.amazonaws.com/petrutest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+        #securityContext:
+          #runAsNonRoot: true
+          #runAsUser: 999
+---
