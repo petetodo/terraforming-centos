@@ -3,7 +3,7 @@
 def test_for_securityContext():
     if spec["kind"] == "Deployment":
         for container in spec["spec"]["template"]["spec"]["containers"]:
-			print ('Image:'+container["image"])
+			#print ('Image:'+container["image"])
 			
 			assert_contains(container, "securityContext", "should have securityContext")
 
